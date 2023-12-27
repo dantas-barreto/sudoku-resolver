@@ -29,6 +29,7 @@ int main(void) {
             ClearBackground(RAYWHITE);
 
             DrawText("raylib [core] - Sudoku", 20, 20, 20, DARKGRAY);
+            DrawLine(18, 42, screenWidth - 18, 42, BLACK);
             
             // gerando as linhas de um quadrado - centralizado no ponto 265x90
             struct Rectangle rec;
@@ -36,9 +37,10 @@ int main(void) {
             rec.y = screenHeight / 4 * 2 - 135;
             rec.width = 270;
             rec.height = 270;
+
+            // desenhando o quadrado
             DrawRectangleLinesEx(rec, 2.0, BLACK);
 
-            //DrawRectangleLinesEx(screenWidth/4*2 - 135, screenHeight/4*2 - 135, 270, 270, 1.0, BLACK);
             // divisorias verticais
             DrawLine(295, 90, 295, 360, DARKGRAY);
             DrawLine(325, 90, 325, 360, DARKGRAY);
@@ -48,6 +50,7 @@ int main(void) {
             DrawLine(445, 90, 445, 360, DARKGRAY);
             DrawLine(475, 90, 475, 360, DARKGRAY);
             DrawLine(505, 90, 505, 360, DARKGRAY);
+
             // divisorias horizontais
             DrawLine(265, 120, 535, 120, DARKGRAY);
             DrawLine(265, 150, 535, 150, DARKGRAY);
@@ -57,8 +60,6 @@ int main(void) {
             DrawLine(265, 270, 535, 270, DARKGRAY);
             DrawLine(265, 300, 535, 300, DARKGRAY);
             DrawLine(265, 330, 535, 330, DARKGRAY);
-
-            DrawLine(18, 42, screenWidth - 18, 42, BLACK);
 
         EndDrawing();
         //---------------------------------------
