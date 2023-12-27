@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <raylib.h>
 
+// matriz[i][j]
 const int sudoku_teste[9][9] = {{0, 0, 0, 6, 2, 0, 0, 7, 1},
                         {0, 0, 0, 5, 0, 9, 3, 0, 0},
                         {0, 0, 0, 0, 0, 0, 8, 2, 0},
@@ -69,6 +72,20 @@ int main(void) {
             DrawLine(265, 270, 535, 270, DARKGRAY);
             DrawLine(265, 300, 535, 300, DARKGRAY);
             DrawLine(265, 330, 535, 330, DARKGRAY);
+
+            // numeros do exercicio
+            int posX = 270;
+            int posY = 95;
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (posX > 535) {
+                        posX = 270;
+                    }
+                    DrawText("0", posX, posY, 20, BLACK);
+                    posX += 30;
+                }
+                posY += 30;
+            }
 
         EndDrawing();
         //---------------------------------------
