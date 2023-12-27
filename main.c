@@ -81,7 +81,7 @@ int main(void) {
                     if (posX > 535) {
                         posX = 270;
                     }
-                    DrawText("0", posX, posY, 20, BLACK);
+                    DrawText(TextFormat("%d", sudoku_teste[i][j]), posX, posY, 20, BLACK);
                     posX += 30;
                 }
                 posY += 30;
