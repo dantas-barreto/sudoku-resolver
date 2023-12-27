@@ -3,7 +3,7 @@
 void Qual(int n, int ii, int jj, int qual[10][10][10]){
     //n == valor a ser achado; 
     //ii == posição i da matriz; 
-    //jj posição j da matriz; 
+    //jj == posição j da matriz; 
     //qual == matriz com valores posiveis de cada um dos arrays;
     for(int i = 0; i < 9; i++){
         if(qual[ii][jj][i]==n){
