@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void Post(int n,int i,int j,int Ls[9][3],int Cs[9][3],int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
+void Post(int n,int i,int j,int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
     int aux, aux2, k; //declaração de variaveis auxiliares
     if(i < 3){
         aux = 0;
@@ -22,8 +22,8 @@ void Post(int n,int i,int j,int Ls[9][3],int Cs[9][3],int Fa[9],int qual[10][10]
     Fa#(n-1)=Fa#(n-1)-1;Fa_f(i)=Fa_f(i)-1; //diminuir quantos numeros "n" faltam no sudoku, e diminuir quantos numeros faltam na linha i;
     Fa_c(j)=Fa_c(j)-1;Fa_s(k)=Fa_s(k)-1;//diminuir quantos numeros faltam na coluna j e no setor k;
     Exif(n,i)=true;Exic(n,j)=true;Exis(n,k)=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
-    for(int aux = 0; aux < 10; aux++){
-        qual[i][j][aux] = 0;//zerando todas as possibilidades daquela posição;
+    for(int x = 0; x < 10; x++){
+        qual[i][j][x] = 0;//zerando todas as possibilidades daquela posição;
     }
     A[i][j] = n; //Atribuindo o valor de "n" na sua posição na matriz
     Nprch=Nprch+1;//Aumenta os numeros preenchidos
@@ -38,5 +38,13 @@ void Post(int n,int i,int j,int Ls[9][3],int Cs[9][3],int Fa[9],int qual[10][10]
         if (A(i,jj)==0){
             Qual(n, i, jj, qual);
         } 
+    }
+    //*** Alteração nos números candidatos das demais posições do setor ***
+    for (int ii=aux*3; ii < (aux*3)+3; ii++){
+        for (int jj=aux2*3; jj < (aux2*3)+3; jj++){
+            if (A(ii,jj)==0){
+                Qual(n, ii, jj, qual);
+            }
+        }
     }
 }
