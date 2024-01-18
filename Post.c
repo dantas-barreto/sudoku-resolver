@@ -19,9 +19,9 @@ void Post(int n,int i,int j,int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[
     }
     k = aux*3+aux2;//declaração do setor, com base aonde estava os valores
 
-    Fa#(n-1)=Fa#(n-1)-1;Fa_f(i)=Fa_f(i)-1; //diminuir quantos numeros "n" faltam no sudoku, e diminuir quantos numeros faltam na linha i;
-    Fa_c(j)=Fa_c(j)-1;Fa_s(k)=Fa_s(k)-1;//diminuir quantos numeros faltam na coluna j e no setor k;
-    Exif(n,i)=true;Exic(n,j)=true;Exis(n,k)=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
+    Fa[n-1]=Fa[n-1]-1;Fa_f[i]=Fa_f[i]-1; //diminuir quantos numeros "n" faltam no sudoku, e diminuir quantos numeros faltam na linha i;
+    Fa_c[j]=Fa_c[j]-1;Fa_s[k]=Fa_s[k]-1;//diminuir quantos numeros faltam na coluna j e no setor k;
+    Exif[n][i]=true;Exic[n][j]=true;Exis[n][k]=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
     for(int x = 0; x < 10; x++){
         qual[i][j][x] = 0;//zerando todas as possibilidades daquela posição;
     }
@@ -29,20 +29,20 @@ void Post(int n,int i,int j,int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[
     Nprch=Nprch+1;//Aumenta os numeros preenchidos
     //*** Alteracao nos numeros candidatos das demais posicoes da linha ***
     for(int ii = 0; ii < 9; ii++){
-        if (A(ii,j)==0){
+        if (A[ii,j]==0){
             Qual(n, ii, j, qual);
         } 
     }
     //*** Alteracao nos numeros candidatos das demais posicoes da coluna ***
     for(int jj = 0; jj < 9; jj++){
-        if (A(i,jj)==0){
+        if (A[i,jj]==0){
             Qual(n, i, jj, qual);
         } 
     }
     //*** Alteração nos números candidatos das demais posições do setor ***
     for (int ii=aux*3; ii < (aux*3)+3; ii++){
         for (int jj=aux2*3; jj < (aux2*3)+3; jj++){
-            if (A(ii,jj)==0){
+            if (A[ii,jj]==0){
                 Qual(n, ii, jj, qual);
             }
         }
