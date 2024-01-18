@@ -15,7 +15,6 @@ int i, j;
                 if( qual[i][j][9] == 1)
                 {
                     Post(qual[i][j][1],i,j,Fa,qual,Fa_f,Fa_c,Fa_s,Exif,Exic,Exis,A,Nprch);
-                    GraphPress(i,j,1,p,strng,xch,ych,t_sleep,n_sleep,PressCode,A);
                 }
             }
         }
