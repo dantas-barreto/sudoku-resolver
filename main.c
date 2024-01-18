@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 // matriz[i][j]
-const int sudoku_teste[9][9] = {
+int A[9][9] = {
 
                         {0, 0, 0, 6, 2, 0, 0, 7, 1},
                         {0, 0, 0, 5, 0, 9, 3, 0, 0},
@@ -17,12 +17,24 @@ const int sudoku_teste[9][9] = {
                         {1, 2, 0, 0, 7, 3, 0, 0, 0}
 };
 
+void graphPress(Rectangle rec) {
+    DrawRectangleLinesEx(rec, 2.0, BLACK);
+
+}
+
 int main(void) {
 
     // inicializacao
     //-------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
+
+    // gerando as linhas de um quadrado - centralizado no ponto 265x90
+    struct Rectangle rec;
+    rec.x = screenWidth / 4 * 2 - 135;
+    rec.y = screenHeight / 4 * 2 - 135;
+    rec.width = 270;
+    rec.height = 270;
     
     InitWindow(screenWidth, screenHeight, "raylib [core] - Sudoku");
 
@@ -34,7 +46,7 @@ int main(void) {
 
         // update: atualiza os frames da janela
         //---------------------------------------
-        //TODO: implementar o sudo
+        //TODO: implementar o sudoku
         //---------------------------------------
 
         // draw: desenha a janela
@@ -46,25 +58,18 @@ int main(void) {
             DrawText("raylib [core] - Sudoku", 20, 20, 20, DARKGRAY);
             DrawLine(18, 42, screenWidth - 18, 42, BLACK);
             
-            // gerando as linhas de um quadrado - centralizado no ponto 265x90
-            struct Rectangle rec;
-            rec.x = screenWidth / 4 * 2 - 135;
-            rec.y = screenHeight / 4 * 2 - 135;
-            rec.width = 270;
-            rec.height = 270;
-
             // desenhando o quadrado
             DrawRectangleLinesEx(rec, 2.0, BLACK);
 
             // divisorias verticais
-            DrawLine(295, 90, 295, 360, DARKGRAY);
-            DrawLine(325, 90, 325, 360, DARKGRAY);
-            DrawLine(355, 90, 355, 360, DARKGRAY);
-            DrawLine(385, 90, 385, 360, DARKGRAY);
-            DrawLine(415, 90, 415, 360, DARKGRAY);
-            DrawLine(445, 90, 445, 360, DARKGRAY);
-            DrawLine(475, 90, 475, 360, DARKGRAY);
-            DrawLine(505, 90, 505, 360, DARKGRAY);
+            DrawLine(295, 90, 295, 359, DARKGRAY);
+            DrawLine(325, 90, 325, 359, DARKGRAY);
+            DrawLine(355, 90, 355, 359, DARKGRAY);
+            DrawLine(385, 90, 385, 359, DARKGRAY);
+            DrawLine(415, 90, 415, 359, DARKGRAY);
+            DrawLine(445, 90, 445, 359, DARKGRAY);
+            DrawLine(475, 90, 475, 359, DARKGRAY);
+            DrawLine(505, 90, 505, 359, DARKGRAY);
 
             // divisorias horizontais
             DrawLine(265, 120, 535, 120, DARKGRAY);
