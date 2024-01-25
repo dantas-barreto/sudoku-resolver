@@ -17,6 +17,10 @@ int sudoku_teste[9][9] = {
                         {1, 2, 0, 0, 7, 3, 0, 0, 0}
 };
 
+int t_sleep = 40;
+int n_sleep = 8;
+int PressCode = 2;
+
 void graphPress(Rectangle rec) {
     DrawRectangleLinesEx(rec, 2.0, BLACK);
 
@@ -123,8 +127,14 @@ int main(void) {
 
         // update: atualiza os frames da janela
         //---------------------------------------
-        //TODO: implementar o sudoku
-        //---------------------------------------
+        // 2. Leitura do exercicio
+        int A[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                A[i][j] = sudoku_teste[i][j];
+            }
+        }
+
 
         // draw: desenha a janela
         //---------------------------------------
@@ -158,7 +168,8 @@ int main(void) {
             DrawLine(265, 300, 535, 300, DARKGRAY);
             DrawLine(265, 330, 535, 330, DARKGRAY);
 
-            // numeros do exercicio
+            // TODO: inicializar array strng (linha 857)
+
             int posX = 270;
             int posY = 95;
             for (int i = 0; i < 9; i++) {
@@ -166,7 +177,9 @@ int main(void) {
                     if (posX > 535) {
                         posX = 270;
                     }
-                    DrawText(TextFormat("%d", sudoku_teste[i][j]), posX, posY, 20, BLACK);
+                    if (A[i][j] != 0) {
+                        DrawText(TextFormat("%d", A[i][j]), posX, posY, 20, BLUE);
+                    }
                     posX += 30;
                 }
                 posY += 30;
