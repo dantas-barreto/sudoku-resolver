@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 // matriz[i][j]
-int A[9][9] = {
+int sudoku_teste[9][9] = {
 
                         {0, 0, 0, 6, 2, 0, 0, 7, 1},
                         {0, 0, 0, 5, 0, 9, 3, 0, 0},
@@ -24,22 +24,99 @@ void graphPress(Rectangle rec) {
 
 int main(void) {
 
-    // inicializacao
-    //-------------------------------------------
+    // definicao do tamanho da janela
     const int screenWidth = 800;
     const int screenHeight = 450;
-
-    // gerando as linhas de um quadrado - centralizado no ponto 265x90
+    // definicao do tamanho da matriz do sudoku
     struct Rectangle rec;
     rec.x = screenWidth / 4 * 2 - 135;
     rec.y = screenHeight / 4 * 2 - 135;
     rec.width = 270;
     rec.height = 270;
-    
+
     InitWindow(screenWidth, screenHeight, "raylib [core] - Sudoku");
 
     SetTargetFPS(60);               // configura a janera para rodar a 60 fps
     //-------------------------------------------
+    
+    // 1. inicializacao
+    //-------------------------------------------
+
+    // declaracoes de variaveis
+    //-------------------------------------------
+    int Fa[9];          // Faltam (n):          Quantos numeros n faltam?
+    int Fa_f[9];        // Faltam_linha(i):     Quantos numeros faltam na Linha i?
+    int Fa_c[9];        // Faltam_coluna(j):    Quantos numeros faltam na Coluna j?
+    int Fa_s[9];        // Faltam_setor(k):     Quantos numeros faltam no setor k?
+    bool Exi_f[9][9];   // Existe_linha(n, i):  Existe jah numero n na linha i?     
+    bool Exi_c[9][9];   // Existe_coluna(n, j): Existe jah numero n na coluna j?
+    bool Exi_s[9][9];   // Existe_setor(n, k):  Existe jah numero n no setor k?
+    int Ls[3][3];       // Linhas do setor k
+    int Cs[3][3];       // Colunas do setor k
+    int qual[9][9][10];
+    int aux, aux2, Nprch; // outras variaveis
+
+    // 1.1 Prametros, vetores e matrizes
+    
+    // Atribuicao das linhas ordenadas para cada setor
+    for (int k = 0; k <= 2; k++) {
+        for (int i = 0; i <= 2; i++) {
+        }
+    }
+    for (int k = 3; k <= 5; k++) {
+        for (int i = 0; i <= 2; i++) {
+            Ls[k][i] = i;
+        }
+    }
+    for (int k = 6; k <= 8; k++) {
+        for (int i = 0; i <= 2; i++) {
+            Ls[k][i] = i;
+        }
+    }
+    
+    // Atribuicao das colunas ordenadas para cada setor
+    for (aux = 0; aux <= 2; aux++) {
+        aux2 = 1 + (aux - 1) * 3;
+        for (int j = 0; j <= 2; j++) {
+            Cs[aux2][j] = j;
+        }
+    }
+    for (aux = 0; aux <= 2; aux++) {
+        aux2 = 2 + (aux - 1) * 3;
+        for (int j = 0; j <= 2; j++) {
+            Cs[aux2][j] = j + 3;
+        }
+    }
+    for (aux = 0; aux <= 2; aux++) {
+        aux2 = 3 + (aux - 1) * 3;
+        for (int j = 0; j <= 2; j++) {
+            Cs[aux2][j] = j + 6;
+        }
+    }
+    
+    // Inicializacao de vetores e matrizes
+    for (aux = 0; aux <= 8; aux++) {
+        Fa[aux] = 9;
+        Fa_f[aux] = 9;
+        Fa_c[aux] = 9;
+        Fa_s[aux] = 9;
+    }
+    for (int n = 0; n <= 8; n++) {
+        for (aux = 0; aux <= 8; aux++) {
+            Exi_f[n][aux] = false;
+            Exi_c[n][aux] = false;
+            Exi_s[n][aux] = false;
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            qual[i][j][9] = 9;
+            for (int k = 1; k < 9; k++) {
+                qual[i][j][k] = k + 1;
+            }
+        }
+    }
+    Nprch = 0;
 
     // loop principal
     while (!WindowShouldClose()) {  // detecta se o botao de fechar a janela ou ESC foi precionado
