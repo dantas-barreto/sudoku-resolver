@@ -55,8 +55,8 @@ int main(void) {
     bool Exi_f[9][9];   // Existe_linha(n, i):  Existe jah numero n na linha i?     
     bool Exi_c[9][9];   // Existe_coluna(n, j): Existe jah numero n na coluna j?
     bool Exi_s[9][9];   // Existe_setor(n, k):  Existe jah numero n no setor k?
-    int Ls[3][3];       // Linhas do setor k
-    int Cs[3][3];       // Colunas do setor k
+    int Ls[9][3];       // Linhas do setor k
+    int Cs[9][3];       // Colunas do setor k
     int qual[9][9][10];
     int aux, aux2, Nprch; // outras variaveis
 
@@ -65,36 +65,37 @@ int main(void) {
     // Atribuicao das linhas ordenadas para cada setor
     for (int k = 0; k <= 2; k++) {
         for (int i = 0; i <= 2; i++) {
+            Ls[k][i] = i + 1;
         }
     }
     for (int k = 3; k <= 5; k++) {
         for (int i = 0; i <= 2; i++) {
-            Ls[k][i] = i;
+            Ls[k][i] = i + i + 4;
         }
     }
     for (int k = 6; k <= 8; k++) {
         for (int i = 0; i <= 2; i++) {
-            Ls[k][i] = i;
+            Ls[k][i] = i + 7;
         }
     }
     
     // Atribuicao das colunas ordenadas para cada setor
     for (aux = 0; aux <= 2; aux++) {
-        aux2 = 1 + (aux - 1) * 3;
+        aux2 = aux * 3;
         for (int j = 0; j <= 2; j++) {
-            Cs[aux2][j] = j;
+            Cs[aux2][j] = j + 1;
         }
     }
     for (aux = 0; aux <= 2; aux++) {
-        aux2 = 2 + (aux - 1) * 3;
+        aux2 = 1 + (aux * 3);
         for (int j = 0; j <= 2; j++) {
-            Cs[aux2][j] = j + 3;
+            Cs[aux2][j] = j + 4;
         }
     }
     for (aux = 0; aux <= 2; aux++) {
-        aux2 = 3 + (aux - 1) * 3;
+        aux2 = 2 + (aux * 3);
         for (int j = 0; j <= 2; j++) {
-            Cs[aux2][j] = j + 6;
+            Cs[aux2][j] = j + 7;
         }
     }
     
@@ -115,7 +116,7 @@ int main(void) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             qual[i][j][9] = 9;
-            for (int k = 1; k < 9; k++) {
+            for (int k = 0; k < 9; k++) {
                 qual[i][j][k] = k + 1;
             }
         }
@@ -149,24 +150,28 @@ int main(void) {
             DrawRectangleLinesEx(rec, 2.0, BLACK);
 
             // divisorias verticais
-            DrawLine(295, 90, 295, 359, DARKGRAY);
-            DrawLine(325, 90, 325, 359, DARKGRAY);
-            DrawLine(355, 90, 355, 359, DARKGRAY);
-            DrawLine(385, 90, 385, 359, DARKGRAY);
-            DrawLine(415, 90, 415, 359, DARKGRAY);
-            DrawLine(445, 90, 445, 359, DARKGRAY);
-            DrawLine(475, 90, 475, 359, DARKGRAY);
-            DrawLine(505, 90, 505, 359, DARKGRAY);
+            DrawLine(295, 90, 295, 359, BLACK);
+            DrawLine(325, 90, 325, 359, BLACK);
+            DrawLine(355, 90, 355, 359, BLACK);
+            DrawLine(356, 90, 356, 359, BLACK);
+            DrawLine(385, 90, 385, 359, BLACK);
+            DrawLine(415, 90, 415, 359, BLACK);
+            DrawLine(445, 90, 445, 359, BLACK);
+            DrawLine(446, 90, 446, 359, BLACK);
+            DrawLine(475, 90, 475, 359, BLACK);
+            DrawLine(505, 90, 505, 359, BLACK);
 
             // divisorias horizontais
-            DrawLine(265, 120, 535, 120, DARKGRAY);
-            DrawLine(265, 150, 535, 150, DARKGRAY);
-            DrawLine(265, 180, 535, 180, DARKGRAY);
-            DrawLine(265, 210, 535, 210, DARKGRAY);
-            DrawLine(265, 240, 535, 240, DARKGRAY);
-            DrawLine(265, 270, 535, 270, DARKGRAY);
-            DrawLine(265, 300, 535, 300, DARKGRAY);
-            DrawLine(265, 330, 535, 330, DARKGRAY);
+            DrawLine(265, 120, 535, 120, BLACK);
+            DrawLine(265, 150, 535, 150, BLACK);
+            DrawLine(265, 180, 535, 180, BLACK);
+            DrawLine(265, 181, 535, 181, BLACK);
+            DrawLine(265, 210, 535, 210, BLACK);
+            DrawLine(265, 240, 535, 240, BLACK);
+            DrawLine(265, 270, 535, 270, BLACK);
+            DrawLine(265, 271, 535, 271, BLACK);
+            DrawLine(265, 300, 535, 300, BLACK);
+            DrawLine(265, 330, 535, 330, BLACK);
 
             // TODO: inicializar array strng (linha 857)
 
