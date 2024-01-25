@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void Qual(int n, int ii, int jj, int qual[10][10][10]){
+void Qual(int n, int ii, int jj, int qual[9][9][10]){
     //n == valor a ser achado; 
     //ii == posição i da matriz; 
     //jj == posição j da matriz; 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void Post(int n,int i,int j,int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
+void Post(int n,int i,int j,int ls[9][3], int cs[9][3], int Fa[9],int qual[9][9][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
     int aux, aux2, k; //declaração de variaveis auxiliares
     if(i < 3){
         aux = 0;
@@ -40,8 +40,8 @@ void Post(int n,int i,int j,int Fa[9],int qual[10][10][10],int Fa_f[9],int Fa_c[
         } 
     }
     //*** Alteração nos números candidatos das demais posições do setor ***
-    for (int ii=aux*3; ii < (aux*3)+3; ii++){
-        for (int jj=aux2*3; jj < (aux2*3)+3; jj++){
+    for (int ii=ls[k][0]; ii < ls[k][3]; ii++){
+        for (int jj=cs[k][0]; jj < cs[k][3]; jj++){
             if (A[ii,jj]==0){
                 Qual(n, ii, jj, qual);
             }
