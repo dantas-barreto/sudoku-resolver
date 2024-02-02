@@ -103,7 +103,7 @@ void Post(int n,int i,int j,int ls[9][3], int cs[9][3], int Fa[9],int qual[9][9]
 
     Fa[n-1]=Fa[n-1]-1;Fa_f[i]=Fa_f[i]-1; //diminuir quantos numeros "n" faltam no sudoku, e diminuir quantos numeros faltam na linha i;
     Fa_c[j]=Fa_c[j]-1;Fa_s[k]=Fa_s[k]-1;//diminuir quantos numeros faltam na coluna j e no setor k;
-    Exif[n][i]=true;Exic[n][j]=true;Exis[n][k]=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
+    Exif[n-1][i]=true;Exic[n-1][j]=true;Exis[n-1][k]=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
     for(int x = 0; x < 10; x++){
         qual[i][j][x] = 0;//zerando todas as possibilidades daquela posição;
     }
