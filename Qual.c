@@ -8,7 +8,7 @@ void Qual(int n, int ii, int jj, int qual[9][9][10]){
     for(int i = 0; i < 9; i++){
         if(qual[ii][jj][i]==n){
             for(int aux = i; aux < 8; aux++){
-                if(qual[ii][jj][aux+1] == 1 || qual[ii][jj][aux+1] == 2 || qual[ii][jj][aux+1] == 3 || qual[ii][jj][aux+1] == 4 || qual[ii][jj][aux+1] == 5 || qual[ii][jj][aux+1] == 6 || qual[ii][jj][aux+1] == 7 || qual[ii][jj][aux+1] == 8 || qual[ii][jj][aux+1] == 9 || qual[ii][jj][aux+1] == 0){
+                if(qual[ii][jj][aux+1] == 1 || qual[ii][jj][aux+1] == 2 || qual[ii][jj][aux+1] == 3 || qual[ii][jj][aux+1] == 4 || qual[ii][jj][aux+1] == 5 || qual[ii][jj][aux+1] == 6 || qual[ii][jj][aux+1] == 7 || qual[ii][jj][aux+1] == 8 || qual[ii][jj][aux+1] == 9){
                     //verificar se são numeros possiveis
                     qual[ii][jj][aux] = qual[ii][jj][aux+1]; //ajustar os candidatos da posição mais a frente
                 }else{
@@ -16,7 +16,7 @@ void Qual(int n, int ii, int jj, int qual[9][9][10]){
                 }
             }
             qual[ii][jj][8] = 0; //zerar o ultimo candidato
-            qual[ii][jj][9] -= 1; // diminuir em 1 a quantidade de cqandidatos da linha
+            qual[ii][jj][9] -= 1; // diminuir em 1 a quantidade de candidatos da linha
         }
     }
 }

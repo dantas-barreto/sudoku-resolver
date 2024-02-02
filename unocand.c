@@ -14,7 +14,7 @@ int i, j;
             {
                 if( qual[i][j][9] == 1)
                 {
-                    Post(qual[i][j][1],i,j,Fa,qual,Fa_f,Fa_c,Fa_s,Exif,Exic,Exis,A,Nprch);
+                    Post(qual[i][j][0],i,j,Fa,qual,Fa_f,Fa_c,Fa_s,Exif,Exic,Exis,A,Nprch);
                 }
             }
         }
