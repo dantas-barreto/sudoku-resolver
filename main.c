@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include <raylib.h>
 
@@ -21,9 +22,77 @@ int t_sleep = 40;
 int n_sleep = 8;
 int PressCode = 2;
 
+void Qual(int n, int ii, int jj, int qual[9][9][10]){
+    //n == valor a ser achado;
+    //ii == posição i da matriz;
+    //jj == posição j da matriz;
+    //qual == matriz com valores posiveis de cada um dos arrays;
+    for(int i = 0; i < 9; i++){
+        if(qual[ii][jj][i]==n){
+            for(int aux = i; aux < 8; aux++){
+                if(qual[ii][jj][aux+1] == 1 || qual[ii][jj][aux+1] == 2 || qual[ii][jj][aux+1] == 3 || qual[ii][jj][aux+1] == 4 || qual[ii][jj][aux+1] == 5 || qual[ii][jj][aux+1] == 6 || qual[ii][jj][aux+1] == 7 || qual[ii][jj][aux+1] == 8 || qual[ii][jj][aux+1] == 9){
+                    //verificar se são numeros possiveis
+                    qual[ii][jj][aux] = qual[ii][jj][aux+1]; //ajustar os candidatos da posição mais a frente
+                }else{
+                    qual[ii][jj][aux] = 0; //caso não aja candidatos atrás, zerar
+                }
+            }
+            qual[ii][jj][8] = 0; //zerar o ultimo candidato
+            qual[ii][jj][9] -= 1; // diminuir em 1 a quantidade de candidatos da linha
+        }
+    }
+}
+
 void graphPress(Rectangle rec) {
     DrawRectangleLinesEx(rec, 2.0, BLACK);
+}
 
+void Post(int n,int i,int j,int ls[9][3], int cs[9][3], int Fa[9],int qual[9][9][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
+    int aux, aux2, k; //declaração de variaveis auxiliares
+    if(i < 3){
+        aux = 0;
+    }else if(i < 6){
+        aux = 1;
+    }else{
+        aux = 2;
+    }
+    if(j < 3){
+        aux2 = 0;
+    }else if(j < 6){
+        aux2 = 1;
+    }else{
+        aux2 = 2;
+    }
+    k = aux*3+aux2;//declaração do setor, com base aonde estava os valores
+
+    Fa[n-1]=Fa[n-1]-1;Fa_f[i]=Fa_f[i]-1; //diminuir quantos numeros "n" faltam no sudoku, e diminuir quantos numeros faltam na linha i;
+    Fa_c[j]=Fa_c[j]-1;Fa_s[k]=Fa_s[k]-1;//diminuir quantos numeros faltam na coluna j e no setor k;
+    Exif[n][i]=true;Exic[n][j]=true;Exis[n][k]=true;//Marcando que existe o numero "n" na coluna i, linha j, setor k;
+    for(int x = 0; x < 10; x++){
+        qual[i][j][x] = 0;//zerando todas as possibilidades daquela posição;
+    }
+    A[i][j] = n; //Atribuindo o valor de "n" na sua posição na matriz
+    Nprch=Nprch+1;//Aumenta os numeros preenchidos
+    //*** Alteracao nos numeros candidatos das demais posicoes da linha ***
+    for(int ii = 0; ii < 9; ii++){
+        if (A[ii,j]==0){
+            Qual(n, ii, j, qual);
+        }
+    }
+    //*** Alteracao nos numeros candidatos das demais posicoes da coluna ***
+    for(int jj = 0; jj < 9; jj++){
+        if (A[i,jj]==0){
+            Qual(n, i, jj, qual);
+        }
+    }
+    //*** Alteração nos números candidatos das demais posições do setor ***
+    for (int ii=ls[k][0]; ii < ls[k][3]; ii++){
+        for (int jj=cs[k][0]; jj < cs[k][3]; jj++){
+            if (A[ii,jj]==0){
+                Qual(n, ii, jj, qual);
+            }
+        }
+    }
 }
 
 int main(void) {
@@ -42,7 +111,7 @@ int main(void) {
 
     SetTargetFPS(60);               // configura a janera para rodar a 60 fps
     //-------------------------------------------
-    
+
     // 1. inicializacao
     //-------------------------------------------
 
@@ -52,7 +121,7 @@ int main(void) {
     int Fa_f[9];        // Faltam_linha(i):     Quantos numeros faltam na Linha i?
     int Fa_c[9];        // Faltam_coluna(j):    Quantos numeros faltam na Coluna j?
     int Fa_s[9];        // Faltam_setor(k):     Quantos numeros faltam no setor k?
-    bool Exi_f[9][9];   // Existe_linha(n, i):  Existe jah numero n na linha i?     
+    bool Exi_f[9][9];   // Existe_linha(n, i):  Existe jah numero n na linha i?
     bool Exi_c[9][9];   // Existe_coluna(n, j): Existe jah numero n na coluna j?
     bool Exi_s[9][9];   // Existe_setor(n, k):  Existe jah numero n no setor k?
     int Ls[9][3];       // Linhas do setor k
@@ -61,7 +130,7 @@ int main(void) {
     int aux, aux2, Nprch; // outras variaveis
 
     // 1.1 Prametros, vetores e matrizes
-    
+
     // Atribuicao das linhas ordenadas para cada setor
     for (int k = 0; k <= 2; k++) {
         for (int i = 0; i <= 2; i++) {
@@ -78,7 +147,7 @@ int main(void) {
             Ls[k][i] = i + 7;
         }
     }
-    
+
     // Atribuicao das colunas ordenadas para cada setor
     for (aux = 0; aux <= 2; aux++) {
         aux2 = aux * 3;
@@ -98,7 +167,7 @@ int main(void) {
             Cs[aux2][j] = j + 7;
         }
     }
-    
+
     // Inicializacao de vetores e matrizes
     for (aux = 0; aux <= 8; aux++) {
         Fa[aux] = 9;
@@ -123,72 +192,88 @@ int main(void) {
     }
     Nprch = 0;
 
+    //---------------------------------------
+    // 2. Leitura do exercicio
+    int A[9][9];
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (sudoku_teste[i][j] != 0) {
+                Post(sudoku_teste[i][j], i, j, Ls, Cs, Fa, qual, Fa_f, Fa_c, Fa_s, Exi_f, Exi_c, Exi_s, A, Nprch);
+                Nprch--;
+            }
+            else {
+                A[i][j] = 0;
+            }
+        }
+    }
+
+    // TODO: inicializar array strng (linha 857)
+
+
     // loop principal
     while (!WindowShouldClose()) {  // detecta se o botao de fechar a janela ou ESC foi precionado
 
         // update: atualiza os frames da janela
-        //---------------------------------------
-        // 2. Leitura do exercicio
-        int A[9][9];
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                A[i][j] = sudoku_teste[i][j];
-            }
-        }
 
 
         // draw: desenha a janela
         //---------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+        ClearBackground(RAYWHITE);
 
-            DrawText("raylib [core] - Sudoku", 20, 20, 20, DARKGRAY);
-            DrawLine(18, 42, screenWidth - 18, 42, BLACK);
-            
-            // desenhando o quadrado
-            DrawRectangleLinesEx(rec, 2.0, BLACK);
+        DrawText("raylib [core] - Sudoku", 20, 20, 20, DARKGRAY);
+        DrawLine(18, 42, screenWidth - 18, 42, BLACK);
 
-            // divisorias verticais
-            DrawLine(295, 90, 295, 359, BLACK);
-            DrawLine(325, 90, 325, 359, BLACK);
-            DrawLine(355, 90, 355, 359, BLACK);
-            DrawLine(356, 90, 356, 359, BLACK);
-            DrawLine(385, 90, 385, 359, BLACK);
-            DrawLine(415, 90, 415, 359, BLACK);
-            DrawLine(445, 90, 445, 359, BLACK);
-            DrawLine(446, 90, 446, 359, BLACK);
-            DrawLine(475, 90, 475, 359, BLACK);
-            DrawLine(505, 90, 505, 359, BLACK);
+        // desenhando o quadrado
+        DrawRectangleLinesEx(rec, 2.0, BLACK);
 
-            // divisorias horizontais
-            DrawLine(265, 120, 535, 120, BLACK);
-            DrawLine(265, 150, 535, 150, BLACK);
-            DrawLine(265, 180, 535, 180, BLACK);
-            DrawLine(265, 181, 535, 181, BLACK);
-            DrawLine(265, 210, 535, 210, BLACK);
-            DrawLine(265, 240, 535, 240, BLACK);
-            DrawLine(265, 270, 535, 270, BLACK);
-            DrawLine(265, 271, 535, 271, BLACK);
-            DrawLine(265, 300, 535, 300, BLACK);
-            DrawLine(265, 330, 535, 330, BLACK);
+        // divisorias verticais
+        DrawLine(295, 90, 295, 359, BLACK);
+        DrawLine(325, 90, 325, 359, BLACK);
+        DrawLine(355, 90, 355, 359, BLACK);
+        DrawLine(356, 90, 356, 359, BLACK);
+        DrawLine(385, 90, 385, 359, BLACK);
+        DrawLine(415, 90, 415, 359, BLACK);
+        DrawLine(445, 90, 445, 359, BLACK);
+        DrawLine(446, 90, 446, 359, BLACK);
+        DrawLine(475, 90, 475, 359, BLACK);
+        DrawLine(505, 90, 505, 359, BLACK);
 
-            // TODO: inicializar array strng (linha 857)
+        // divisorias horizontais
+        DrawLine(265, 120, 535, 120, BLACK);
+        DrawLine(265, 150, 535, 150, BLACK);
+        DrawLine(265, 180, 535, 180, BLACK);
+        DrawLine(265, 181, 535, 181, BLACK);
+        DrawLine(265, 210, 535, 210, BLACK);
+        DrawLine(265, 240, 535, 240, BLACK);
+        DrawLine(265, 270, 535, 270, BLACK);
+        DrawLine(265, 271, 535, 271, BLACK);
+        DrawLine(265, 300, 535, 300, BLACK);
+        DrawLine(265, 330, 535, 330, BLACK);
 
-            int posX = 270;
-            int posY = 95;
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (posX > 535) {
-                        posX = 270;
-                    }
-                    if (A[i][j] != 0) {
-                        DrawText(TextFormat("%d", A[i][j]), posX, posY, 20, BLUE);
-                    }
-                    posX += 30;
+        int posX = 270;
+        int posY = 95;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (posX > 535) {
+                    posX = 270;
                 }
-                posY += 30;
+                if (A[i][j] != 0) {
+                    DrawText(TextFormat("%d", A[i][j]), posX, posY, 20, BLUE);
+                }
+                posX += 30;
             }
+            posY += 30;
+        }
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (A[i][j] != 0) {
+                    //Post();
+                }
+            }
+        }
 
         EndDrawing();
         //---------------------------------------
