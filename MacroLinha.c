@@ -1,4 +1,4 @@
-void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9], int Ls[9][3], int Cs[9][3], int qual[9][9][10], int A[9][9], int Nprch, int t_sleep, int n_sleep, int PressCode) {
+void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9][9], int Ls[9][3], int Cs[9][3], int qual[9][9][10], int A[9][9], int Nprch, int t_sleep, int n_sleep, int PressCode) {
     int aux;
     int adjacente1 = 0;
     int adjacente2 = 0;
