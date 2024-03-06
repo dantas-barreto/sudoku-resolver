@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 // Colocacoes de numeros por "macro-coluna"
-void macrocoluna(int Ls[9][3],int Cs[9][3], int Fa[9], qual[9][9][10], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9][9], int A[9][9], int Nprch)
+void macrocoluna(int Ls[9][3],int Cs[9][3], int Fa[9], int qual[9][9][10], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9][9], int A[9][9], int Nprch)
 {
 int adjacente1, adjacente2;
 int i, j, m, n, cont;
@@ -81,7 +81,7 @@ int aux, k;
                                             {
                                                 if(qual[i][j][m] == n) // analisa os valores candidatos até chegar a "n
                                                 {
-                                                    Post(n,i,j,Ls,Cs,Fa,Qual,Fa_f,Fa_c,Fa_s,Exi_f,Exi_c,Exi_s,A,Nprch) // atualiza a posição
+                                                    Post(n,i,j,Ls,Cs,Fa,Qual,Fa_f,Fa_c,Fa_s,Exi_f,Exi_c,Exi_s,A,Nprch); // atualiza a posição
                                                 }
                                             }
                                         }
