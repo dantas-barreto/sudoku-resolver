@@ -43,46 +43,6 @@ void Qual(int n, int ii, int jj, int qual[9][9][10]){
     }
 }
 
-void graphPress(Rectangle rec) {
-    DrawRectangleLinesEx(rec, 2.0, BLACK);
-}
-
-void Parexlin(int qual[9][9][10],int Fa_f[9],int A[9][9]){
-    //qual == array tridimencional com todas as possibilidades de valores pra cada posição
-    //fa_f == array que fala quantas possibilidades faltam na linha i
-    //A == matriz utilizada no programa como o sudoku
-    int cand[8]; // array com a posição com apenas 2 possibilidades de candidatos.
-    for(int i = 0; i < 9; i++){
-        if (Fa_f[i] > 2){// verificar se faltam mais de 2 numeros na linha i
-            int ncand = -1;// declaração de numero candidatos para o array
-            for(int j = 0; j <= 8; j++){
-                if(A[i][j] == 0 && qual[i][j][9] == 2){
-                    ncand++;
-                    cand[ncand] = j; // arranjamento do array com a posição com apenas 2 possibilidades
-                }
-            }
-
-            if(ncand > 0){//caso se tenha mais de apenas 1 possibilidade de lugares com apenas 2 possibilidades
-                for(int aux = 0; aux <= ncand; aux++){
-                    int jaux = cand[aux];//auxiliar de posição
-                    for(int aux2 = aux+1; aux2 <= ncand; aux2++){
-                        int jaux2 = cand[aux2];// auxiliar de posição
-                        if(qual[i][jaux][0] == qual[i][jaux2][0] && qual[i][jaux][1] == qual[i][jaux2][1]){//verificação se os 2 pares são iguais
-                           for (int j = 0; j < 9; j++){
-                            //retirando possibilidades de outras casas fora as 2 achadas
-                               if (A[i][j] == 0 && j!=cand[aux] && j!=cand[aux2]){
-                                    Qual(qual[i][cand[aux]][0], i, j, qual);
-                                    Qual(qual[i][cand[aux]][1], i, j, qual);
-                               }
-                           }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 void Post(int n,int i,int j,int ls[9][3], int cs[9][3], int Fa[9],int qual[9][9][10],int Fa_f[9],int Fa_c[9],int Fa_s[9],bool Exif[9][9],bool Exic[9][9],bool Exis[9][9],int A[9][9],int Nprch){
     int aux, aux2, k; //declaração de variaveis auxiliares
     if(i < 3){
@@ -130,6 +90,142 @@ void Post(int n,int i,int j,int ls[9][3], int cs[9][3], int Fa[9],int qual[9][9]
         }
     }
 }
+
+void graphPress(Rectangle rec) {
+    DrawRectangleLinesEx(rec, 2.0, BLACK);
+}
+
+void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9], int Ls[9][3], int Cs[9][3], int qual[9][9][10], int A[9][9], int Nprch, int t_sleep, int n_sleep, int PressCode) {
+    int aux;
+    int adjacente1 = 0;
+    int adjacente2 = 0;
+    for (int n = 0; n < 9; n++) {
+        if (Fa[n] <= 7) {
+            for (int i = 0; i < 9; i++) {
+                if (!Exi_f[n][i]) { // verifica se a linha nao tem o numero
+                    switch (i) {
+                        // primeiro bloco
+                        case 0:
+                            adjacente1 = 1;
+                            adjacente2 = 2;
+                            aux = 0;
+                            break;
+                        case 1:
+                            adjacente1 = 0;
+                            adjacente2 = 2;
+                            aux = 0;
+                            break;
+                        case 2:
+                            adjacente1 = 0;
+                            adjacente2 = 1;
+                            aux = 0;
+                            break;
+
+                        // segundo bloco
+                        case 3:
+                            adjacente1 = 4;
+                            adjacente2 = 5;
+                            aux = 1;
+                            break;
+                        case 4:
+                            adjacente1 = 3;
+                            adjacente2 = 5;
+                            aux = 1;
+                            break;
+                        case 5:
+                            adjacente1 = 3;
+                            adjacente2 = 4;
+                            aux = 1;
+                            break;
+                        
+                        // terceiro bloco
+                        case 6:
+                            adjacente1 = 7;
+                            adjacente2 = 8;
+                            aux = 2;
+                            break;
+                        case 7:
+                            adjacente1 = 6;
+                            adjacente2 = 8;
+                            aux = 2;
+                            break;
+                        case 8:
+                            adjacente1 = 6;
+                            adjacente2 = 7;
+                            aux = 2;
+                            break;
+                    }
+
+                    if (Exi_f[n][adjacente1] && Exi_f[n][adjacente2]) {
+                        for (int k = aux*3; k < aux*3+3; k++) {
+                            if (!Exi_s[n][k]) { // identifica o setor
+                                int count = 0;
+                                for (int j = Cs[k][0]; k < Cs[k][2]; j++) {
+                                    if (A[i][j] == 0) {
+                                        for (int m = 0; m < qual[i][j][10]; m++) {
+                                            if (qual[i][j][m] == n) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (count == 1) { // verifica se existe apenas uma celula 
+                                    for (int j = Cs[k][0]; j < Cs[k][2]; j++) {
+                                        if (A[i][j] == 0) {
+                                            for (int m = 0; m < qual[i][j][10]; m++) {
+                                                if (qual[i][j][m] == n) {
+                                                    Post(n, i, j, Ls, Cs, Fa, qual, Fa_f, Fa_c, Fa_s, Exi_f, Exi_c, Exi_s, A, Nprch);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Parexlin(int qual[9][9][10],int Fa_f[9],int A[9][9]){
+    //qual == array tridimencional com todas as possibilidades de valores pra cada posição
+    //fa_f == array que fala quantas possibilidades faltam na linha i
+    //A == matriz utilizada no programa como o sudoku
+    int cand[8]; // array com a posição com apenas 2 possibilidades de candidatos.
+    for(int i = 0; i < 9; i++){
+        if (Fa_f[i] > 2){// verificar se faltam mais de 2 numeros na linha i
+            int ncand = -1;// declaração de numero candidatos para o array
+            for(int j = 0; j <= 8; j++){
+                if(A[i][j] == 0 && qual[i][j][9] == 2){
+                    ncand++;
+                    cand[ncand] = j; // arranjamento do array com a posição com apenas 2 possibilidades
+                }
+            }
+
+            if(ncand > 0){//caso se tenha mais de apenas 1 possibilidade de lugares com apenas 2 possibilidades
+                for(int aux = 0; aux <= ncand; aux++){
+                    int jaux = cand[aux];//auxiliar de posição
+                    for(int aux2 = aux+1; aux2 <= ncand; aux2++){
+                        int jaux2 = cand[aux2];// auxiliar de posição
+                        if(qual[i][jaux][0] == qual[i][jaux2][0] && qual[i][jaux][1] == qual[i][jaux2][1]){//verificação se os 2 pares são iguais
+                           for (int j = 0; j < 9; j++){
+                            //retirando possibilidades de outras casas fora as 2 achadas
+                               if (A[i][j] == 0 && j!=cand[aux] && j!=cand[aux2]){
+                                    Qual(qual[i][cand[aux]][0], i, j, qual);
+                                    Qual(qual[i][cand[aux]][1], i, j, qual);
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 int main(void) {
 
