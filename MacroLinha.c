@@ -40,7 +40,7 @@ void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][
                             adjacente2 = 4;
                             aux = 1;
                             break;
-                        
+
                         // terceiro bloco
                         case 6:
                             adjacente1 = 7;
@@ -65,7 +65,7 @@ void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][
                                 int count = 0;
                                 for (int j = Cs[k][0]; k < Cs[k][2]; j++) {
                                     if (A[i][j] == 0) {
-                                        for (int m = 0; m < qual[i][j][10]; m++) {
+                                        for (int m = 0; m < qual[i][j][9]; m++) {
                                             if (qual[i][j][m] == n) {
                                                 count++;
                                             }
@@ -73,10 +73,10 @@ void MacroLinha(int Fa[9], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][
                                     }
                                 }
 
-                                if (count == 1) { // verifica se existe apenas uma celula 
+                                if (count == 1) { // verifica se existe apenas uma celula
                                     for (int j = Cs[k][0]; j < Cs[k][2]; j++) {
                                         if (A[i][j] == 0) {
-                                            for (int m = 0; m < qual[i][j][10]; m++) {
+                                            for (int m = 0; m < qual[i][j][9]; m++) {
                                                 if (qual[i][j][m] == n) {
                                                     Post(n, i, j, Ls, Cs, Fa, qual, Fa_f, Fa_c, Fa_s, Exi_f, Exi_c, Exi_s, A, Nprch);
                                                 }
