@@ -17,19 +17,19 @@ int aux, k;
                 {
                     if(j < 3) // caso j < 4 estamos analizando o primeiro setor
                     {          // da macrocoluna
-                        switch j
+                        switch (j)
                         {
-                            case 1: adjacente1=1; adjacente2=2; aux=0;// caso j = 1 seus adjacentes serão as colunas 2 e 3 do setor
+                            case 0: adjacente1=1; adjacente2=2; aux=0;// caso j = 1 seus adjacentes serão as colunas 2 e 3 do setor
                             break;                                      // auxiliar indicando o setor
-                            case 2: adjacente1=0; adjacente2=2; aux=0;
+                            case 1: adjacente1=0; adjacente2=2; aux=0;
                             break;
-                            case 3: adjacente1=0; adjacente2=1; aux=0;
+                            case 2: adjacente1=0; adjacente2=1; aux=0;
                             break;
                         }
                     }
                     else if(j < 6) // segundo setor
                     {
-                        switch j
+                        switch (j)
                         {
                             case 3: adjacente1=4; adjacente2=5; aux=1;
                             break;
@@ -41,13 +41,13 @@ int aux, k;
                     }
                     else // terceiro setor
                     {
-                        switch j
+                        switch (j)
                         {
-                        case 7: adjacente1=7; adjacente2=8; aux=2;
+                        case 6: adjacente1=7; adjacente2=8; aux=2;
                         break;
-                        case 8: adjacente1=6; adjacente2=8; aux=2;
+                        case 7: adjacente1=6; adjacente2=8; aux=2;
                         break;
-                        case 9: adjacente1=6; adjacente2=7; aux=2;
+                        case 8: adjacente1=6; adjacente2=7; aux=2;
                         break;
                         }
                     }
