@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 // Colocacoes de numeros por "macro-coluna"
 void macrocoluna(int Ls[9][3],int Cs[9][3], int Fa[9], int qual[9][9][10], int Fa_f[9], int Fa_c[9], int Fa_s[9], bool Exi_f[9][9], bool Exi_c[9][9], bool Exi_s[9][9], int A[9][9], int Nprch)
 {
@@ -13,7 +14,7 @@ int aux, k;
         {
             for(j = 0; j < 9; j++) // percorre as colunas da matriz
             {
-                if(!Exic[n - 1][j]) // se nao existe numero "n na coluna
+                if(!Exi_c[n - 1][j]) // se nao existe numero "n na coluna
                 {
                     if(j < 3) // caso j < 4 estamos analizando o primeiro setor
                     {          // da macrocoluna
@@ -51,11 +52,11 @@ int aux, k;
                         break;
                         }
                     }
-                    if(Exic[n - 1][adjacente1] && Exic[n - 1][adjacente2]) // se existe numero "n nas colunas dos adjacentes
+                    if(Exi_c[n - 1][adjacente1] && Exi_c[n - 1][adjacente2]) // se existe numero "n nas colunas dos adjacentes
                     {
                         for(k = aux; k < 3;k++, aux+6) // for para percorrer os setores
                         {
-                            if(!Exis[n - 1][k]) // se nao existir "n no setor k
+                            if(!Exi_s[n - 1][k]) // se nao existir "n no setor k
                             {
                                 cont = 0;
                                 for(i = Ls[k][0]; i <= Ls[k][2]; i++) // percorre da primeira a terceira linha do setor
@@ -81,7 +82,7 @@ int aux, k;
                                             {
                                                 if(qual[i][j][m] == n) // analisa os valores candidatos até chegar a "n
                                                 {
-                                                    Post(n,i,j,Ls,Cs,Fa,Qual,Fa_f,Fa_c,Fa_s,Exi_f,Exi_c,Exi_s,A,Nprch); // atualiza a posição
+                                                    Post(n,i,j,Ls,Cs,Fa,qual,Fa_f,Fa_c,Fa_s,Exi_f,Exi_c,Exi_s,A,Nprch); // atualiza a posição
                                                 }
                                             }
                                         }
