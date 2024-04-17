@@ -43,7 +43,6 @@ for(j = 0; j < 9; j++) // percorre as colunas da matriz
                         {
                                                                                                                                         //de ambos espaços forem iguais
                             // printar na tela os pares iguais
-                            printf("\nPressCode = 3\n"); // n utilizar nada q envolve o presscode
                            /* if(PressCode == 3)
                             {
                                 printf("par explicito na coluna: ");
